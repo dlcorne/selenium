@@ -29,13 +29,33 @@ public class FirstTest {
 		sb.sendKeys(searchTerm);
 		sb.submit();
 		
-		// Here I'd be looking at the results page of the site and asserting that searchTerm is somewhere within the name of the top result.
-		// Yet the site is exceeding resource limit and does not process search requests, so, little hard to do that.
-		// Can only assume this is the result of what you said about someone accessing it too much?
+		WebElement resultList = driver.findElement(By.cssSelector("#list > a"));
+		resultList.submit();
+		WebElement topResult = driver.findElement(By.cssSelector("#center_column > ul > li:nth-child(1) > div"));
+		WebElement topResultName = driver.findElement(By.cssSelector("#center_column > ul > li:nth-child(1) > div > div > div.center-block.col-xs-4.col-xs-7.col-md-4 > h5 > a"));
+		assertEquals(searchTerm, topResultName); // feel like this 1000% doesnt work but i got bigger fish to fry atm
 		
-		WebElement result = driver.findElement(By.cssSelector(null)); // null would be the resulting dress
-		assertEquals(searchTerm, result.getText()); // not exactly like this probably but without trial and error i am nothing
-			
+		WebElement topResultAtc = driver.findElement(By.cssSelector("#center_column > ul > li:nth-child(1) > div > div > div.right-block.col-xs-4.col-xs-12.col-md-4 > div > div.button-container.col-xs-7.col-md-12 > a.button.ajax_add_to_cart_button.btn.btn-default"));
+		topResultAtc.click();
+		// insert a delay here i think
+		WebElement checkout = driver.findElement(By.cssSelector("#layer_cart > div.clearfix > div.layer_cart_cart.col-xs-12.col-md-6 > div.button-container > a"));
+		checkout.click();
+		WebElement checkout2 = driver.findElement(By.cssSelector("#center_column > p.cart_navigation.clearfix > a.button.btn.btn-default.standard-checkout.button-medium"));
+		checkout2.click();
+		String email = "bruh@bruhmail.ru";
+		WebElement emailBar = driver.findElement(By.cssSelector("#email_create"));
+		emailBar.sendKeys(email);
+		emailBar.submit();
+		
+		// currently working on plugging these into the account page
+		String fname = "Bruh";
+		String lname = "Bruhson";
+		String pwd = "passwordlol";
+		String addy = "1738 Fetty Ave";
+		String city = "Bruhsville";
+		String zip = "what even are these";
+		String mob = "0121-DO-ONE";
+		String addyAlias = "Secret Bunker";
 	}
 	
 	@AfterEach
